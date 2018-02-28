@@ -1,0 +1,59 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.lti.rfr"
+    },
+    "jhipsterVersion": "4.14.0",
+    "baseName": "rfr3",
+    "packageName": "com.lti.rfr",
+    "packageFolder": "com/lti/rfr",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "e54953a12d57cdcdd025b50a64cf4c28ec34bd92",
+    "clientFramework": "angular1",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [
+      {
+        "name": "generator-jhipster-primeng",
+        "version": "2.0.39"
+      },
+      {
+        "name": "generator-jhipster-bootstrap-material-design",
+        "version": "3.5.1"
+      },
+      {
+        "name": "generator-jhipster-primeng-entity",
+        "version": "1.0.2"
+      },
+      {
+        "name": "generator-jhipster-primeng-charts",
+        "version": "0.0.3"
+      },
+      {
+        "name": "generator-jhipster-clarity",
+        "version": "0.0.1"
+      },
+      {
+        "name": "generator-jhipster-darktheme",
+        "version": "0.0.7"
+      }
+    ],
+    "enableTranslation": false,
+    "enableHibernateCache": false
+  }
+}
