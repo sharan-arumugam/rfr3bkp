@@ -9,6 +9,10 @@ legend{
 	font-weight: bold
 }
 
+.color-red,.color-orange,.color-yellow,.color-green{
+	font-weight: bold;
+}
+
 .color-red{
 	color: red;
 	font-color: red;
@@ -22,6 +26,7 @@ legend{
 .color-yellow{
 	color: yellow;
 	font-color: yellow;
+	text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
 }
 
 .color-green{

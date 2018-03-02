@@ -1,50 +1,29 @@
 <div>
-    <h2>Users</h2>
     <jhi-alert></jhi-alert>
-    <div class="row">
-      <div class="col-md-4">
-          <button class="btn btn-primary" ui-sref="rfr.new">
-              <span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>
-          </button>
-      </div>
-    </div>
+     <div class="row">
+      <div class="col-xs-12">
+    	 <h2>RFRs</h2>
+         <button class="btn btn-primary" ui-sref="rfr.upload">
+             <span class="glyphicon glyphicon-flash"></span> <span>Upload</span>
+         </button>
+         </div>
+     </div>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
             <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                <th jh-sort-by="requestId"><span>Request ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th><span></span></th>
+                <th jh-sort-by="requestId"><span>ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="requestTitle"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="appleManager"><span>Apple Manager</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="initiator"><span>Initiator</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th></th>
-				<th><span>Profiles</span></th>            
-                <th></th>
+                <th jh-sort-by="status"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="rfr in vm.rfrs track by rfr.requestId">
-                <td><a ui-sref="rfr-detail({requestId:rfr.requestId})">{{rfr.requestId}}</a></td>
-                <td>{{rfr.appleManager}} </td>
-                <td>{{rfr.initiator}}</td>
-                <td>
-                    <button class="btn btn-danger btn-xs" ng-click="vm.setActive(rfr, true)" ng-show="!rfr.activated"
-                           >Deactivated</button>
-                    <button class="btn btn-success btn-xs" ng-click="vm.setActive(rfr, false)" ng-show="rfr.activated"
-                            ng-disabled="vm.currentAccount.login === rfr.login">Activated</button>
-                </td>
-                
-                <td>
-                    <div ng-repeat="authority in rfr.authorities">
-                        <span class="label label-info">{{ authority }}</span>
-                    </div>
-                </td>
-                <td class="text-right">
+            	    <td ng-show="rfr.status !== 'Not Responded'"></td>
+                <td class="text-right" ng-show="rfr.status === 'Not Responded'">
                     <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                ui-sref="rfr-detail({login:rfr.login})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>
-                            <span class="hidden-xs hidden-sm"></span>
-                        </button>
                         <button type="submit"
                                 ui-sref="rfr.edit({requestId:rfr.requestId})"
                                 class="btn btn-primary btn-sm">
@@ -53,6 +32,11 @@
                         </button>
                     </div>
                 </td>
+                <td><a ui-sref="rfr.edit({requestId:rfr.requestId})">{{rfr.requestId}}</a></td>
+                <td>{{rfr.requestTitle}}</td>
+                <td>{{rfr.appleManager}}</td>
+                <td ng-class="{'color-red': rfr.status === 'Not Responded', 'color-orange': rfr.status === 'Partially Responded', 'color-yellow': rfr.status === 'Responded', 'color-green': rfr.status === 'Completed'}"
+                >{{rfr.status}}</td>
             </tr>
             </tbody>
         </table>

@@ -104,29 +104,58 @@
 			
 	   </fieldset>
 	   
-   		<fieldset class="col-xs-12 form-group"> 
-		<legend>Email To</legend>
-			<label> <input type="checkbox"
-				ng-model="checkboxModel.value1"> Sheetal
-			</label>
-			<br /> 
-			<label> <input type="checkbox"
-				ng-model="checkboxModel.value2" ng-true-value="'YES'"
-				ng-false-value="'NO'"> Zuber
-			</label>
-			<br />
-			<label> <input type="checkbox"
-				ng-model="checkboxModel.value3" ng-true-value="'YES'"
-				ng-false-value="'NO'"> Rahul
-			</label>
-			<br />
-			<label> <input type="checkbox"
-				ng-model="checkboxModel.value4" ng-true-value="'YES'"
-				ng-false-value="'NO'"> All
-			</label>
-			<br />
-		</fieldset>
+	   <fieldset class="col-xs-6 form-group"> 
+		<legend>RFR Date</legend> 
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Send Date </label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.sendDate"  name="senddate">
+			</div>
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Due Date </label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.dueDate"  name="duedate">
+			</div>
+	   </fieldset>
 	   
+	   <fieldset class="col-xs-6 form-group">
+		<legend>Project Date</legend> 
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Project Start Date</label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.projectStartDate"  name="projectstartdate">
+			</div>
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Project End Date</label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.projectEndDate"  name="projectenddate">
+			</div>
+	   </fieldset>
+	   
+	   	<fieldset class="col-xs-12 form-group">
+	   	<legend>&nbsp;</legend> 
+		    <div class="col-xs-6 form-group">
+	            <label class="control-label">RFP Project Type</label>
+	            <input type="text" class="form-control" name="projecttype"
+	                   ng-model="vm.rfr.rfpProjectType">
+	        </div>
+	        
+	        <div class="col-xs-6 form-group">
+		            <label class="control-label">RFP Project Model</label>
+		            <input type="text" class="form-control" name="projectmodel"
+		                   ng-model="vm.rfr.rfpProjectModel">
+	        </div>
+	        
+	        <div class="col-xs-6 form-group">
+		            <label class="control-label">IMT-2</label>
+		            <input type="text" class="form-control" name="imt2"
+		                   ng-model="vm.rfr.imt2" readonly>
+	        </div>
+
+	        <div class="col-xs-6 form-group">
+	            <label class="control-label">Role</label>
+	            <input type="text" class="form-control" name="role"
+	                   ng-model="vm.rfr.role">
+	        </div>
+	        
+        </fieldset>
+        
         <div class="form-group"> &nbsp;
 		</div>
     </div>
