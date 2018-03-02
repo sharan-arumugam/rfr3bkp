@@ -4,6 +4,31 @@ body {
     color: #333;
 }
 
+legend{
+	font-size: 14px;
+	font-weight: bold
+}
+
+.color-red{
+	color: red;
+	font-color: red;
+}
+
+.color-orange{
+	color: orange;
+	font-color: orange;
+}
+
+.color-yellow{
+	color: yellow;
+	font-color: yellow;
+}
+
+.color-green{
+	color: green;
+	font-color: green;
+}
+
 /* ==========================================================================
 Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
 ========================================================================== */

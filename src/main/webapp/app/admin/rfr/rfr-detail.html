@@ -1,0 +1,42 @@
+<div>
+    <h2>
+        <span>RFR</span> - [<b>{{vm.rfr.requestId}}</b>]
+    </h2>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Login</span></dt>
+        <dd>
+            <span>{{vm.rfr.requestId}}</span>
+            <span class="label label-danger" ng-show="!vm.rfr.activated"
+                 >Deactivated</span>
+            <span class="label label-success" ng-show="vm.rfr.activated"
+                 >Activated</span>
+        </dd>
+        <dt><span>First Name</span></dt>
+        <dd>{{vm.rfr.firstName}}</dd>
+        <dt><span>Last Name</span></dt>
+        <dd>{{vm.rfr.lastName}}</dd>
+        <dt><span>Email</span></dt>
+        <dd>{{vm.rfr.email}}</dd>
+        <dt><span>Created By</span></dt>
+        <dd>{{vm.rfr.createdBy}}</dd>
+        <dt><span>Created Date</span></dt>
+        <dd>{{vm.rfr.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
+        <dt><span>Last Modified By</span></dt>
+        <dd>{{vm.rfr.lastModifiedBy}}</dd>
+        <dt><span>Last Modified Date</span></dt>
+        <dd>{{vm.rfr.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
+        <dt><span>Profiles</span></dt>
+        <dd>
+            <ul class="list-unstyled">
+                <li ng-repeat="authority in vm.rfr.authorities">
+                    <span class="label label-info">{{authority}}</span>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+    <button type="submit"
+            ui-sref="rfr"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>
