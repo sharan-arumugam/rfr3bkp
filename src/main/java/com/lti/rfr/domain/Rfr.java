@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -96,8 +95,12 @@ public class Rfr extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private LocalDate projectEndDate;
 
-    @OneToOne
-    private RfrData data;
+    private String skills;
+    private String fulfillment;
+    private String technology;
+    private String location;
+    private Integer onsiteHc;
+    private Integer offshoreHc;
 
     public Rfr(RfrRaw rawRef) {
         requestId = parseLongString(rawRef.getRequestId());
@@ -118,7 +121,12 @@ public class Rfr extends AbstractAuditingEntity implements Serializable {
         rfpProjectModel = rawRef.getRfpProjectModel();
         projectStartDate = parseRfrDate(rawRef.getProjectStartDate());
         projectEndDate = parseRfrDate(rawRef.getProjectEndDate());
-        data = new RfrData(rawRef);
+        skills = rawRef.getSkills();
+        fulfillment = rawRef.getFulfillment();
+        technology = rawRef.getTechnology();
+        location = rawRef.getLocation();
+        onsiteHc = rawRef.getOnsiteHc();
+        offshoreHc = rawRef.getOffshoreHc();
     }
 
     @JsonProperty("sendDate")

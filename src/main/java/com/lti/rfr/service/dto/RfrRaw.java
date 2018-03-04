@@ -39,7 +39,7 @@ public class RfrRaw {
 
     // user input
     private String skills;
-    private String fulfilment;
+    private String fulfillment;
     private String technology;
     private String location;
     private Integer onsiteHc;

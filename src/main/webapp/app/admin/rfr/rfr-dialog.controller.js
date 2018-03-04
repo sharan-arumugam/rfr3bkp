@@ -16,14 +16,13 @@
         vm.save = save;
         vm.rfr = entity;
 
-
-
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
 
         function onSaveSuccess (result) {
             vm.isSaving = false;
+            console.log("result: "+result);
             $uibModalInstance.close(result);
         }
 
@@ -33,12 +32,8 @@
 
         function save () {
             vm.isSaving = true;
-            if (vm.rfr.requestId !== null) {
-                Rfr.update(vm.rfr, onSaveSuccess, onSaveError);
-            } else {
-                vm.rfr.langKey = 'en';
-                Rfr.save(vm.rfr, onSaveSuccess, onSaveError);
-            }
+            console.log("saveing:: "+vm.rfr);
+            Rfr.update(vm.rfr, onSaveSuccess, onSaveError);
         }
     }
 })();

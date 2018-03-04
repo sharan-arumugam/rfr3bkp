@@ -5,9 +5,9 @@
         .module('rfr3App')
         .controller('RfrController', RfrController);
 
-    RfrController.$inject = ['Principal', 'Rfr', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants'];
+    RfrController.$inject = ['Upload','$timeout','Principal', 'Rfr', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants'];
 
-    function RfrController(Principal, Rfr, ParseLinks, AlertService, $state, pagingParams, paginationConstants) {
+    function RfrController(Upload, $timeout, Principal, Rfr, ParseLinks, AlertService, $state, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
@@ -25,8 +25,11 @@
         vm.reverse = pagingParams.ascending;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
+        vm.uploadFiles = uploadFiles;
+        vm.date = new Date();
 
         vm.loadAll();
+        
         Principal.identity().then(function(account) {
             vm.currentAccount = account;
         });
@@ -87,6 +90,32 @@
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch
             });
+        }
+        
+        function uploadFiles(file, errFiles) {
+            vm.f = file;
+            vm.errFile = errFiles && errFiles[0];
+            if (file) {
+            		vm.date = new Date();
+                file.upload = Upload.upload({
+                    url: '/api/upload/rfr',
+                    data: {rfrFile: file}
+                });
+
+                file.upload.then(function (response) {
+                    $timeout(function () {
+                        file.result = response.data;
+                        vm.errorMsg = response.statusText;
+                        vm.loadAll();
+                    });
+                }, function (response) {
+                    if (response.status > 0) {
+                        vm.errorMsg = response.statusText;
+                    }
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                });
+            }   
         }
     }
 })();

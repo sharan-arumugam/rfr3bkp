@@ -3,7 +3,6 @@ package com.lti.rfr.web.rest;
 import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.rfr.domain.Rfr;
 import com.lti.rfr.service.RfrService;
+import com.lti.rfr.service.dto.RfrRaw;
 
 @RestController
 @RequestMapping("/api")
@@ -44,9 +44,9 @@ public class RfrResource {
     }
 
     @PutMapping("/rfr")
-    public ResponseEntity<Rfr> update(@RequestBody Map<String, String> rfrRawMap) {
-        log.info("invoking update in Controller :: " + rfrRawMap.get("requestId"));
-        return ok(rfrService.update(rfrRawMap));
+    public ResponseEntity<Rfr> update(@RequestBody RfrRaw rfrRaw) {
+        log.info("rfrRaw:: "+rfrRaw);
+        return ok(rfrService.update(rfrRaw));
     }
 
 }

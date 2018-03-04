@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,10 +32,10 @@ public class UploadResource {
     }
 
     @PostMapping("/rfr")
-    public ResponseEntity<HttpStatus> uploadRfr(@RequestParam("rfr") MultipartFile rfr) {
+    public ResponseEntity<HttpStatus> uploadRfr(@RequestParam("rfrFile") MultipartFile rfr) {
         log.info("Controller invoked");
 
-        ResponseEntity<HttpStatus> response;
+        BodyBuilder responseBody;
         boolean isUploaded = false;
 
         try {
@@ -44,9 +45,9 @@ public class UploadResource {
             log.error(e.getMessage(), e);
 
         } finally {
-            response = isUploaded ? accepted().build() : status(NOT_MODIFIED).build();
+            responseBody = isUploaded ? accepted() : status(NOT_MODIFIED);
         }
-        return response;
+        return responseBody.build();
     }
 
 }

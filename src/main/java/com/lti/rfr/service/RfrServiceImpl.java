@@ -51,8 +51,8 @@ public class RfrServiceImpl implements RfrService {
     }
 
     @Override
-    public Rfr update(Map<String, String> rfrRawMap) {
-        return null;
+    public Rfr update(RfrRaw rfrRaw) {
+        return rfrRepository.save(new Rfr(rfrRaw));
     }
 
 }

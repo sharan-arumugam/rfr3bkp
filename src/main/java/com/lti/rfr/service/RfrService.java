@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.lti.rfr.domain.Rfr;
+import com.lti.rfr.service.dto.RfrRaw;
 
 public interface RfrService {
 
@@ -14,5 +15,5 @@ public interface RfrService {
 
     Optional<Rfr> getById(Long requestId);
 
-    Rfr update(Map<String, String> rfrRawMap);
+    Rfr update(RfrRaw rfrRaw);
 }
