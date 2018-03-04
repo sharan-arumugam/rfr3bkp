@@ -1,0 +1,171 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+       
+        <div class="col-xs-12"> <h4 class="modal-title" id="myUserLabel">
+        		<span class="col-xs-5">Update RFR: {{vm.rfr.requestId}} </span> 
+        		<span class="col-xs-4">{{vm.rfr.businessType}}</span>
+        		<span class="col-xs-3 align-right" 
+        		ng-class="{'color-red': vm.rfr.status === 'Not Responded', 'color-orange': vm.rfr.status === 'Partially Responded', 'color-yellow': vm.rfr.status === 'Responded', 'color-green': vm.rfr.status === 'Completed'}"> {{vm.rfr.status}} </span>
+         </h4></div>
+       
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        
+        <div class="col-xs-12 form-group">
+            <h4>Title: {{vm.rfr.requestTitle}}</h4>
+        </div>
+
+        <div class="col-xs-6 form-group">
+            <h5>Apple Manager: {{vm.rfr.appleManager}}</h5>
+        </div>
+        
+         <div class="col-xs-6 form-group">
+          	<h5>Initiator: {{vm.rfr.initiator}}</h5>
+        </div>
+        
+        <div class="col-xs-12 form-group">
+            <label class="control-label">Skills</label>
+            <textarea style="resize: none;" class="form-control" name="skills"
+                   ng-model="vm.rfr.skills"></textarea>
+        </div>
+        
+        <div class="col-xs-6 form-group">
+            <label class="control-label">Fulfillment</label>
+            <input type="text" class="form-control" name="fulfillment"
+                   ng-model="vm.rfr.fulfillment">
+        </div>
+        
+        <div class="col-xs-6 form-group">
+	            <label class="control-label">Technology</label>
+	            <input type="text" class="form-control" name="technology"
+	                   ng-model="vm.rfr.technology">
+        </div>
+        
+       <fieldset class="col-xs-12 form-group"> 
+		<legend>Location / Head Count</legend> 
+		  	<div class="form-check form-check-inline col-xs-2">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="radio" ng-model="vm.rfr.location"  name="location" value="na"> N/A
+			  </label>
+			</div>
+			<div class="form-check form-check-inline col-xs-2">
+			  	<label class="form-check-label">
+				    <input class="form-check-input" type="radio" ng-model="vm.rfr.location"  name="location" value="onsite"> Onsite
+			  	</label>
+			</div>
+			<div class="form-check form-check-inline col-xs-2">
+		  		<label class="form-check-label">
+		    			<input class="form-check-input" type="radio" ng-model="vm.rfr.location"  name="location" value="offshore"> Offshore
+		  		</label>
+			</div>
+			<div class="form-check form-check-inline col-xs-2">
+			  <label class="form-check-label">
+			    <input class="form-check-input" type="radio" ng-model="vm.rfr.location"  name="location" value="both"> Both
+			  </label>
+			</div>
+			
+		 	<div class="form-group col-xs-2">
+	            <label class="control-label">Onsite Count</label>
+            		<input type="number" class="form-control" ngPattern="[0-9.]+" name="onsitehc" ng-model="vm.rfr.onsiteHc" min=0 
+            			ng-disabled="vm.rfr.location == 'offshore' || vm.rfr.location == 'na'">
+	            <div ng-show="editForm.onsitehc.$invalid">
+	            		<p class="help-block" ng-show="editForm.onsitehc.$error.min">
+	                    Only positive
+	                </p>
+	                <p class="help-block" ng-show="editForm.onsitehc.$error.number">
+	                    Invalid number
+	                </p>
+	                <p class="help-block" ng-show="editForm.onsitehc.$error.pattern">
+	                    Invalid number
+	                </p>
+	            </div>
+       	    </div>
+        
+	        <div class="form-group col-xs-2">
+	            <label class="control-label">Offshore Count</label>
+            		<input type="number" class="form-control" ngPattern="[0-9.]+" name="offshorehc" ng-model="vm.rfr.offshoreHc" min=0
+					ng-disabled="vm.rfr.location == 'onsite' || vm.rfr.location == 'na'">
+	            <div ng-show="editForm.offshorehc.$invalid">
+	            		<p class="help-block" ng-show="editForm.offshorehc.$error.min">
+	                    Only positive
+	                </p>
+	                <p class="help-block" ng-show="editForm.offshorehc.$error.number">
+	                    Invalid number
+	                </p>
+	                <p class="help-block" ng-show="editForm.offshorehc.$error.pattern">
+	                    Invalid number
+	                </p>
+	            </div>
+	        </div>
+			
+	   </fieldset>
+	   
+	   <fieldset class="col-xs-6 form-group"> 
+		<legend>RFR Date</legend> 
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Send Date </label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.sendDate"  name="senddate">
+			</div>
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Due Date </label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.dueDate"  name="duedate">
+			</div>
+	   </fieldset>
+	   
+	   <fieldset class="col-xs-6 form-group">
+		<legend>Project Date</legend> 
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Project Start Date</label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.projectStartDate"  name="projectstartdate">
+			</div>
+			<div class="form-check form-check-inline col-xs-6">
+			  <label class="form-label"> Project End Date</label>
+			    <input class="form-input" type="text" ng-model="vm.rfr.projectEndDate"  name="projectenddate">
+			</div>
+	   </fieldset>
+	   
+	   	<fieldset class="col-xs-12 form-group">
+	   	<legend>&nbsp;</legend> 
+		    <div class="col-xs-6 form-group">
+	            <label class="control-label">RFP Project Type</label>
+	            <input type="text" class="form-control" name="projecttype"
+	                   ng-model="vm.rfr.rfpProjectType">
+	        </div>
+	        
+	        <div class="col-xs-6 form-group">
+		            <label class="control-label">RFP Project Model</label>
+		            <input type="text" class="form-control" name="projectmodel"
+		                   ng-model="vm.rfr.rfpProjectModel">
+	        </div>
+	        
+	        <div class="col-xs-6 form-group">
+		            <label class="control-label">IMT-2</label>
+		            <input type="text" class="form-control" name="imt2"
+		                   ng-model="vm.rfr.imt2" readonly>
+	        </div>
+
+	        <div class="col-xs-6 form-group">
+	            <label class="control-label">Role</label>
+	            <input type="text" class="form-control" name="role"
+	                   ng-model="vm.rfr.role">
+	        </div>
+	        
+        </fieldset>
+        
+        <div class="form-group"> &nbsp;
+		</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
