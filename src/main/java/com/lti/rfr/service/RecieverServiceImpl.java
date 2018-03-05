@@ -1,9 +1,9 @@
 package com.lti.rfr.service;
 
 import com.lti.rfr.service.RecieverService;
-import com.lti.rfr.domain.Reciever;
+import com.lti.rfr.domain.Receiver;
 import com.lti.rfr.repository.RecieverRepository;
-import com.lti.rfr.service.dto.RecieverDTO;
+import com.lti.rfr.service.dto.ReceiverDTO;
 import com.lti.rfr.service.mapper.RecieverMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +38,9 @@ public class RecieverServiceImpl implements RecieverService {
      * @return the persisted entity
      */
     @Override
-    public RecieverDTO save(RecieverDTO recieverDTO) {
+    public ReceiverDTO save(ReceiverDTO recieverDTO) {
         log.debug("Request to save Reciever : {}", recieverDTO);
-        Reciever reciever = recieverMapper.toEntity(recieverDTO);
+        Receiver reciever = recieverMapper.toEntity(recieverDTO);
         reciever = recieverRepository.save(reciever);
         return recieverMapper.toDto(reciever);
     }
@@ -53,7 +53,7 @@ public class RecieverServiceImpl implements RecieverService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RecieverDTO> findAll(Pageable pageable) {
+    public Page<ReceiverDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Recievers");
         return recieverRepository.findAll(pageable)
             .map(recieverMapper::toDto);
@@ -67,9 +67,9 @@ public class RecieverServiceImpl implements RecieverService {
      */
     @Override
     @Transactional(readOnly = true)
-    public RecieverDTO findOne(Long id) {
+    public ReceiverDTO findOne(Long id) {
         log.debug("Request to get Reciever : {}", id);
-        Reciever reciever = recieverRepository.findOne(id);
+        Receiver reciever = recieverRepository.findOne(id);
         return recieverMapper.toDto(reciever);
     }
 

@@ -1,6 +1,6 @@
 package com.lti.rfr.service;
 
-import com.lti.rfr.service.dto.RecieverDTO;
+import com.lti.rfr.service.dto.ReceiverDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +15,7 @@ public interface RecieverService {
      * @param recieverDTO the entity to save
      * @return the persisted entity
      */
-    RecieverDTO save(RecieverDTO recieverDTO);
+    ReceiverDTO save(ReceiverDTO recieverDTO);
 
     /**
      * Get all the recievers.
@@ -23,7 +23,7 @@ public interface RecieverService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<RecieverDTO> findAll(Pageable pageable);
+    Page<ReceiverDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" reciever.
@@ -31,7 +31,7 @@ public interface RecieverService {
      * @param id the id of the entity
      * @return the entity
      */
-    RecieverDTO findOne(Long id);
+    ReceiverDTO findOne(Long id);
 
     /**
      * Delete the "id" reciever.

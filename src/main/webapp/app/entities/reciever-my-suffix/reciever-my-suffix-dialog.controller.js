@@ -13,7 +13,9 @@
         vm.reciever = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.functionalgroups = FunctionalGroup.query();
+        vm.functionalgroups = FunctionalGroup.query({
+            size: 1000000
+        });
         
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

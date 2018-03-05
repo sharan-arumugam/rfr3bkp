@@ -13,14 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.lti.rfr.service.dto.RecieverDTO;
+import com.lti.rfr.service.dto.ReceiverDTO;
 
 /**
- * A Reciever.
+ * A Receiver.
  */
 @Entity
-@Table(name = "reciever")
-public class Reciever implements Serializable {
+public class Receiver implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,10 +39,10 @@ public class Reciever implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private FunctionalGroup group;
 
-    public Reciever() {
+    public Receiver() {
     }
 
-    public Reciever(RecieverDTO recieverDTO) {
+    public Receiver(ReceiverDTO recieverDTO) {
         id = recieverDTO.getId();
         psNumber = recieverDTO.getPsNumber();
         appleMail = recieverDTO.getAppleMail();
@@ -65,7 +64,7 @@ public class Reciever implements Serializable {
         return psNumber;
     }
 
-    public Reciever psNumber(String psNumber) {
+    public Receiver psNumber(String psNumber) {
         this.psNumber = psNumber;
         return this;
     }
@@ -78,7 +77,7 @@ public class Reciever implements Serializable {
         return appleMail;
     }
 
-    public Reciever appleMail(String appleMail) {
+    public Receiver appleMail(String appleMail) {
         this.appleMail = appleMail;
         return this;
     }
@@ -91,7 +90,7 @@ public class Reciever implements Serializable {
         return name;
     }
 
-    public Reciever name(String name) {
+    public Receiver name(String name) {
         this.name = name;
         return this;
     }
@@ -104,7 +103,7 @@ public class Reciever implements Serializable {
         return group;
     }
 
-    public Reciever group(FunctionalGroup functionalGroup) {
+    public Receiver group(FunctionalGroup functionalGroup) {
         this.group = functionalGroup;
         return this;
     }
@@ -123,7 +122,7 @@ public class Reciever implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Reciever reciever = (Reciever) o;
+        Receiver reciever = (Receiver) o;
         if (reciever.getId() == null || getId() == null) {
             return false;
         }

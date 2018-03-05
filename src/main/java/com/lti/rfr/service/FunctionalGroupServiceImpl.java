@@ -1,5 +1,6 @@
 package com.lti.rfr.service;
 
+import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 import java.util.List;
@@ -63,6 +64,14 @@ public class FunctionalGroupServiceImpl implements FunctionalGroupService {
      *            the pagination information
      * @return the list of entities
      */
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Page<FunctionalGroupDTO> findAll(Pageable pageable) {
+//        log.debug("Request to get all FunctionalGroups");
+//        return functionalGroupRepository.findAll(pageable)
+//                .map(functionalGroupMapper::toDto);
+//    }
+    
     @Override
     @Transactional(readOnly = true)
     public Page<FunctionalGroupDTO> findAll(Pageable pageable) {
@@ -117,7 +126,7 @@ public class FunctionalGroupServiceImpl implements FunctionalGroupService {
                 .filter(exists.negate())
                 .map(FunctionalGroup::new)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+                .collect(toSet());
 
         if (isNotEmpty(groups)) {
             functionalGroupRepository.save(groups);

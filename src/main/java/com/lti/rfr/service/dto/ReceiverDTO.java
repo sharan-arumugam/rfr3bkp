@@ -3,12 +3,12 @@ package com.lti.rfr.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.lti.rfr.domain.Reciever;
+import com.lti.rfr.domain.Receiver;
 
 /**
- * A DTO for the Reciever entity.
+ * A DTO for the Receiver entity.
  */
-public class RecieverDTO implements Serializable {
+public class ReceiverDTO implements Serializable {
 
     /**
      * 
@@ -25,22 +25,25 @@ public class RecieverDTO implements Serializable {
 
     private Long groupId;
 
+    private String groupImt;
+
     private String groupImt1;
-    
+
     private String groupImt2;
 
-    public RecieverDTO() {
+    public ReceiverDTO() {
 
     }
 
-    public RecieverDTO(Reciever reciever) {
+    public ReceiverDTO(Receiver reciever) {
         id = reciever.getId();
         psNumber = reciever.getPsNumber();
         appleMail = reciever.getAppleMail();
         name = reciever.getName();
         groupId = reciever.getGroup().getId();
+        groupImt = reciever.getGroup().getImt();
         groupImt1 = reciever.getGroup().getImt1();
-        setGroupImt2(reciever.getGroup().getImt2());
+        groupImt2 = reciever.getGroup().getImt2();
     }
 
     public Long getId() {
@@ -92,7 +95,7 @@ public class RecieverDTO implements Serializable {
             return false;
         }
 
-        RecieverDTO recieverDTO = (RecieverDTO) o;
+        ReceiverDTO recieverDTO = (ReceiverDTO) o;
         if (recieverDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -128,5 +131,13 @@ public class RecieverDTO implements Serializable {
 
     public void setGroupImt2(String groupImt2) {
         this.groupImt2 = groupImt2;
+    }
+
+    public String getGroupImt() {
+        return groupImt;
+    }
+
+    public void setGroupImt(String groupImt) {
+        this.groupImt = groupImt;
     }
 }

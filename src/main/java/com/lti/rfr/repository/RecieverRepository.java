@@ -1,6 +1,6 @@
 package com.lti.rfr.repository;
 
-import com.lti.rfr.domain.Reciever;
+import com.lti.rfr.domain.Receiver;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RecieverRepository extends JpaRepository<Reciever, Long> {
+public interface RecieverRepository extends JpaRepository<Receiver, Long> {
 
 }

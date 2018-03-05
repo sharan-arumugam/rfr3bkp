@@ -40,7 +40,7 @@ public class FunctionalGroup implements Serializable {
 
     @OneToMany(mappedBy = "group")
     @JsonIgnore
-    private Set<Reciever> functionalGroups = new HashSet<>();
+    private Set<Receiver> functionalGroups = new HashSet<>();
 
     public FunctionalGroup() {
 
@@ -106,28 +106,28 @@ public class FunctionalGroup implements Serializable {
         this.imt2 = imt2;
     }
 
-    public Set<Reciever> getFunctionalGroups() {
+    public Set<Receiver> getFunctionalGroups() {
         return functionalGroups;
     }
 
-    public FunctionalGroup functionalGroups(Set<Reciever> recievers) {
+    public FunctionalGroup functionalGroups(Set<Receiver> recievers) {
         this.functionalGroups = recievers;
         return this;
     }
 
-    public FunctionalGroup addFunctionalGroup(Reciever reciever) {
+    public FunctionalGroup addFunctionalGroup(Receiver reciever) {
         this.functionalGroups.add(reciever);
         reciever.setGroup(this);
         return this;
     }
 
-    public FunctionalGroup removeFunctionalGroup(Reciever reciever) {
+    public FunctionalGroup removeFunctionalGroup(Receiver reciever) {
         this.functionalGroups.remove(reciever);
         reciever.setGroup(null);
         return this;
     }
 
-    public void setFunctionalGroups(Set<Reciever> recievers) {
+    public void setFunctionalGroups(Set<Receiver> recievers) {
         this.functionalGroups = recievers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and

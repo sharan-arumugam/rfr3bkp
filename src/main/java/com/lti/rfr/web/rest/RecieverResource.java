@@ -5,7 +5,7 @@ import com.lti.rfr.service.RecieverService;
 import com.lti.rfr.web.rest.errors.BadRequestAlertException;
 import com.lti.rfr.web.rest.util.HeaderUtil;
 import com.lti.rfr.web.rest.util.PaginationUtil;
-import com.lti.rfr.service.dto.RecieverDTO;
+import com.lti.rfr.service.dto.ReceiverDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +48,12 @@ public class RecieverResource {
      */
     @PostMapping("/recievers")
     @Timed
-    public ResponseEntity<RecieverDTO> createReciever(@RequestBody RecieverDTO recieverDTO) throws URISyntaxException {
+    public ResponseEntity<ReceiverDTO> createReciever(@RequestBody ReceiverDTO recieverDTO) throws URISyntaxException {
         log.debug("REST request to save Reciever : {}", recieverDTO);
         if (recieverDTO.getId() != null) {
             throw new BadRequestAlertException("A new reciever cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RecieverDTO result = recieverService.save(recieverDTO);
+        ReceiverDTO result = recieverService.save(recieverDTO);
         return ResponseEntity.created(new URI("/api/recievers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -70,12 +70,12 @@ public class RecieverResource {
      */
     @PutMapping("/recievers")
     @Timed
-    public ResponseEntity<RecieverDTO> updateReciever(@RequestBody RecieverDTO recieverDTO) throws URISyntaxException {
+    public ResponseEntity<ReceiverDTO> updateReciever(@RequestBody ReceiverDTO recieverDTO) throws URISyntaxException {
         log.debug("REST request to update Reciever : {}", recieverDTO);
         if (recieverDTO.getId() == null) {
             return createReciever(recieverDTO);
         }
-        RecieverDTO result = recieverService.save(recieverDTO);
+        ReceiverDTO result = recieverService.save(recieverDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, recieverDTO.getId().toString()))
             .body(result);
@@ -89,9 +89,9 @@ public class RecieverResource {
      */
     @GetMapping("/recievers")
     @Timed
-    public ResponseEntity<List<RecieverDTO>> getAllRecievers(Pageable pageable) {
+    public ResponseEntity<List<ReceiverDTO>> getAllRecievers(Pageable pageable) {
         log.debug("REST request to get a page of Recievers");
-        Page<RecieverDTO> page = recieverService.findAll(pageable);
+        Page<ReceiverDTO> page = recieverService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/recievers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -104,9 +104,9 @@ public class RecieverResource {
      */
     @GetMapping("/recievers/{id}")
     @Timed
-    public ResponseEntity<RecieverDTO> getReciever(@PathVariable Long id) {
+    public ResponseEntity<ReceiverDTO> getReciever(@PathVariable Long id) {
         log.debug("REST request to get Reciever : {}", id);
-        RecieverDTO recieverDTO = recieverService.findOne(id);
+        ReceiverDTO recieverDTO = recieverService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(recieverDTO));
     }
 

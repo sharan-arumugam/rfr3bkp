@@ -31,10 +31,11 @@
         <div class="form-group">
             <label for="field_group">Group</label>
             <select required class="form-control" id="field_group" name="group" ng-model="vm.reciever.groupId" 
-            ng-options="functionalGroup.id as functionalGroup.imt2||functionalGroup.imt1 for functionalGroup in vm.functionalgroups track by functionalGroup.imt2">
+            		ng-options="functionalGroup.id as 'IMT-2: ' + functionalGroup.imt2 + ' | ' + 'IMT-1: ' + functionalGroup.imt1 + ' | ' + 'IMT: ' + functionalGroup.imt for functionalGroup in vm.functionalgroups track by functionalGroup.id">
                 <option value=""></option>
             </select>
         </div>
+        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

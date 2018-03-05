@@ -2,7 +2,7 @@ package com.lti.rfr.service.mapper;
 
 import com.lti.rfr.domain.*;
 import com.lti.rfr.service.dto.FunctionalGroupDTO;
-import com.lti.rfr.service.dto.RecieverDTO;
+import com.lti.rfr.service.dto.ReceiverDTO;
 
 import org.mapstruct.*;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RecieverMapper{
 
-    public RecieverDTO toDto(Reciever reciever) {
-        return new RecieverDTO(reciever);
+    public ReceiverDTO toDto(Receiver reciever) {
+        return new ReceiverDTO(reciever);
     }
 
-    public Reciever toEntity(RecieverDTO recieverDTO) {
-        return new Reciever(recieverDTO);
+    public Receiver toEntity(ReceiverDTO recieverDTO) {
+        return new Receiver(recieverDTO);
     }
 
 }
