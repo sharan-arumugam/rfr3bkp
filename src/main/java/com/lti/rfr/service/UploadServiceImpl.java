@@ -5,6 +5,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +18,11 @@ public class UploadServiceImpl implements UploadService {
     private final Logger log = LoggerFactory.getLogger(UploadServiceImpl.class);
 
     private final RfrService rfrService;
+    private final FunctionalGroupService groupService;
 
-    public UploadServiceImpl(RfrService rfrService) {
+    public UploadServiceImpl(RfrService rfrService, FunctionalGroupService groupService) {
         this.rfrService = rfrService;
+        this.groupService = groupService;
     }
 
     @Override
@@ -26,7 +30,9 @@ public class UploadServiceImpl implements UploadService {
         log.info("UploadService Invoked:::");
 
         try {
-            rfrService.importRfr(parseAny(fileName, inputStream));
+            List<Map<String, String>> rows = parseAny(fileName, inputStream);
+            groupService.importGroup(rows);
+            rfrService.importRfr(rows);
             return TRUE;
 
         } catch (Exception e) {

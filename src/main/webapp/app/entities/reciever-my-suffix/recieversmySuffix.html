@@ -1,0 +1,39 @@
+<div>
+    <h2>Recipients</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="reciever-my-suffix.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        New Recipient
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="psNumber"><span>PS Number</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="appleMail"><span>Apple Mail</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="groupId"><span>Group</span> <span class="glyphicon glyphicon-sort"></span></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="reciever in vm.recievers track by reciever.id">
+                    <td><a ui-sref="reciever-my-suffix.edit({id:reciever.id})">{{reciever.psNumber}}</a></td>
+                    <td>{{reciever.name}}</td>
+                    <td>{{reciever.appleMail}}</td>
+                    <td>
+                        <a ui-sref="functional-group-my-suffix-detail({id:reciever.groupId})">{{reciever.groupImt2 || reciever.groupImt1}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
