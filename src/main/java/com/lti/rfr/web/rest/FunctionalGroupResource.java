@@ -1,15 +1,16 @@
 package com.lti.rfr.web.rest;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lti.rfr.repository.FunctionalGroupRepository;
 import com.lti.rfr.service.FunctionalGroupService;
 import com.lti.rfr.service.dto.FunctionalGroupDTO;
+import com.lti.rfr.service.dto.Imt1DTO;
+import com.lti.rfr.service.dto.Imt2DTO;
+import com.lti.rfr.service.dto.ImtDTO;
 import com.lti.rfr.web.rest.errors.BadRequestAlertException;
 import com.lti.rfr.web.rest.util.HeaderUtil;
 import com.lti.rfr.web.rest.util.PaginationUtil;
@@ -130,7 +135,7 @@ public class FunctionalGroupResource {
     }
 
     @GetMapping("/functional-group-master")
-    public Map<String, Map<String, String>> getAllFunctionalGroupMaster() {
+    public List<ImtDTO> getAllFunctionalGroupMaster() throws JsonProcessingException {
 
         log.debug("REST request to get a page of FunctionalGroups");
         List<FunctionalGroupDTO> list = functionalGroupRepository
@@ -138,45 +143,51 @@ public class FunctionalGroupResource {
                 .stream()
                 .map(FunctionalGroupDTO::new)
                 .collect(toList());
-        
-        
 
         Map<String, List<FunctionalGroupDTO>> imtMap = list.stream()
                 .filter(dto -> null != dto.getImt())
                 .collect(groupingBy(FunctionalGroupDTO::getImt));
 
-        Map<String, Map<String, List<FunctionalGroupDTO>>> imt1Map = new HashMap<>();
+        List<ImtDTO> imtList = new ArrayList<>();
 
-        imtMap.forEach((imt, dtoList) -> {
-            imt1Map.put(imt, dtoList
+        imtMap.forEach((imt, imtDtoList) -> {
+
+            ImtDTO imtDTO = new ImtDTO();
+            imtDTO.setName(imt);
+
+            List<Imt1DTO> imt1List = new ArrayList<>();
+
+            imtDtoList
                     .stream()
                     .filter(dto -> null != dto.getImt1())
-                    .collect(groupingBy(FunctionalGroupDTO::getImt1)));
+                    .collect(groupingBy(FunctionalGroupDTO::getImt1))
+                    .forEach((imt1, dtoList) -> {
+
+                        Imt1DTO imt1DTO = new Imt1DTO();
+                        imt1DTO.setName(imt1);
+
+                        List<Imt2DTO> imt2List = new ArrayList<>();
+                        
+                        dtoList.stream()
+                                .filter(dto -> null != dto.getImt2())
+                                .collect(groupingBy(FunctionalGroupDTO::getImt2)).forEach((imt2, imt2Groups) -> {
+
+                                    for (FunctionalGroupDTO im : imt2Groups) {
+                                        Imt2DTO imt2DTO = new Imt2DTO();
+                                        imt2DTO.setId(String.valueOf(im.getId()));
+                                        imt2DTO.setName(imt2);
+
+                                        imt2List.add(imt2DTO);
+                                    }
+                                });
+                        imt1DTO.setChildren(imt2List);
+                        imt1List.add(imt1DTO);
+                    });
+            imtDTO.setChildren(imt1List);
+            imtList.add(imtDTO);
         });
 
-        Map<String, Map<String, String>> finalMap = new HashMap<>();
-
-        imt1Map.forEach((imt, dtoMap) -> {
-            Map<String, String> xMap1 = new HashMap<>();
-            dtoMap.forEach((imt1, dtoList) -> {
-                xMap1.put(imt1, dtoList.stream()
-                        .map(FunctionalGroupDTO::getImt2)
-                        .collect(joining(", ")));
-            });
-            finalMap.put(imt, xMap1);
-        });
-
-        log.info("=====================##  IMT  ##========================");
-
-        finalMap.forEach((imt, map1) -> {
-            log.info("==IMT :: " + imt);
-            map1.forEach((imt1, imt2CS) -> {
-                log.info("====IMT-1 :: " + imt1);
-                log.info("=======IMT-2 :: " + imt2CS);
-            });
-        });
-
-        return finalMap;
+        return imtList;
     }
 
     /**
