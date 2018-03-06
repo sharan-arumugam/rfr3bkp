@@ -4,7 +4,7 @@
     angular
         .module('rfr3App', [
             'ngStorage',
-            'ngTable',
+            //'ngTable',
             'ngResource',
             'ngCookies',
             'ngAria',
