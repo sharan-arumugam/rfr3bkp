@@ -125,13 +125,58 @@ public class FunctionalGroupResource {
      */
     @GetMapping("/functional-groups")
     @Timed
-    public ResponseEntity<List<FunctionalGroupDTO>> getAllFunctionalGroups(Pageable pageable) {
+    public List<ImtDTO> getAllFunctionalGroups(Pageable pageable) {
 
-        log.debug("REST request to get a page of FunctionalGroups");
-        Page<FunctionalGroupDTO> page = functionalGroupService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/functional-groups");
+        List<FunctionalGroupDTO> list = functionalGroupRepository
+                .findAll()
+                .stream()
+                .map(FunctionalGroupDTO::new)
+                .collect(toList());
 
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        Map<String, List<FunctionalGroupDTO>> imtMap = list.stream()
+                .filter(dto -> null != dto.getImt())
+                .collect(groupingBy(FunctionalGroupDTO::getImt));
+
+        List<ImtDTO> imtList = new ArrayList<>();
+
+        imtMap.forEach((imt, imtDtoList) -> {
+
+            ImtDTO imtDTO = new ImtDTO();
+            imtDTO.setName(imt);
+
+            List<Imt1DTO> imt1List = new ArrayList<>();
+
+            imtDtoList
+                    .stream()
+                    .filter(dto -> null != dto.getImt1())
+                    .collect(groupingBy(FunctionalGroupDTO::getImt1))
+                    .forEach((imt1, dtoList) -> {
+
+                        Imt1DTO imt1DTO = new Imt1DTO();
+                        imt1DTO.setName(imt1);
+
+                        List<Imt2DTO> imt2List = new ArrayList<>();
+
+                        dtoList.stream()
+                                .filter(dto -> null != dto.getImt2())
+                                .collect(groupingBy(FunctionalGroupDTO::getImt2)).forEach((imt2, imt2Groups) -> {
+
+                                    for (FunctionalGroupDTO im : imt2Groups) {
+                                        Imt2DTO imt2DTO = new Imt2DTO();
+                                        imt2DTO.setId(String.valueOf(im.getId()));
+                                        imt2DTO.setName(imt2);
+
+                                        imt2List.add(imt2DTO);
+                                    }
+                                });
+                        imt1DTO.setChildren(imt2List);
+                        imt1List.add(imt1DTO);
+                    });
+            imtDTO.setChildren(imt1List);
+            imtList.add(imtDTO);
+        });
+
+        return imtList;
     }
 
     @GetMapping("/functional-group-master")
@@ -167,7 +212,7 @@ public class FunctionalGroupResource {
                         imt1DTO.setName(imt1);
 
                         List<Imt2DTO> imt2List = new ArrayList<>();
-                        
+
                         dtoList.stream()
                                 .filter(dto -> null != dto.getImt2())
                                 .collect(groupingBy(FunctionalGroupDTO::getImt2)).forEach((imt2, imt2Groups) -> {

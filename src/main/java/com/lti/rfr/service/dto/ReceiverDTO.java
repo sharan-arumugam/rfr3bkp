@@ -1,38 +1,23 @@
 package com.lti.rfr.service.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import com.lti.rfr.domain.Receiver;
 
-/**
- * A DTO for the Receiver entity.
- */
 public class ReceiverDTO implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String psNumber;
-
     private String appleMail;
-
     private String name;
-
-    private Long groupId;
-
-    private String groupImt;
-
-    private String groupImt1;
-
-    private String groupImt2;
+    private List<String> groups;
 
     public ReceiverDTO() {
-
+        
     }
 
     public ReceiverDTO(Receiver reciever) {
@@ -40,10 +25,6 @@ public class ReceiverDTO implements Serializable {
         psNumber = reciever.getPsNumber();
         appleMail = reciever.getAppleMail();
         name = reciever.getName();
-        groupId = reciever.getGroup().getId();
-        groupImt = reciever.getGroup().getImt();
-        groupImt1 = reciever.getGroup().getImt1();
-        groupImt2 = reciever.getGroup().getImt2();
     }
 
     public Long getId() {
@@ -78,14 +59,6 @@ public class ReceiverDTO implements Serializable {
         this.name = name;
     }
 
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long functionalGroupId) {
-        this.groupId = functionalGroupId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -117,27 +90,11 @@ public class ReceiverDTO implements Serializable {
                 "}";
     }
 
-    public String getGroupImt1() {
-        return groupImt1;
+    public List<String> getGroups() {
+        return groups;
     }
 
-    public void setGroupImt1(String groupImt1) {
-        this.groupImt1 = groupImt1;
-    }
-
-    public String getGroupImt2() {
-        return groupImt2;
-    }
-
-    public void setGroupImt2(String groupImt2) {
-        this.groupImt2 = groupImt2;
-    }
-
-    public String getGroupImt() {
-        return groupImt;
-    }
-
-    public void setGroupImt(String groupImt) {
-        this.groupImt = groupImt;
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 }

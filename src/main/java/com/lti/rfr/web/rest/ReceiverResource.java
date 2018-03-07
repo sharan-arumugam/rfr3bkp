@@ -27,24 +27,28 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class RecieverResource {
+public class ReceiverResource {
 
-    private final Logger log = LoggerFactory.getLogger(RecieverResource.class);
+    private final Logger log = LoggerFactory.getLogger(ReceiverResource.class);
 
     private static final String ENTITY_NAME = "reciever";
 
-    private final RecieverService recieverService;
+    private final RecieverService receiverService;
 
-    public RecieverResource(RecieverService recieverService) {
-        this.recieverService = recieverService;
+    public ReceiverResource(RecieverService recieverService) {
+        this.receiverService = recieverService;
     }
 
     /**
-     * POST  /recievers : Create a new reciever.
+     * POST /recievers : Create a new reciever.
      *
-     * @param recieverDTO the recieverDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new recieverDTO, or with status 400 (Bad Request) if the reciever has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param recieverDTO
+     *            the recieverDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new
+     *         recieverDTO, or with status 400 (Bad Request) if the reciever has
+     *         already an ID
+     * @throws URISyntaxException
+     *             if the Location URI syntax is incorrect
      */
     @PostMapping("/recievers")
     @Timed
@@ -53,74 +57,88 @@ public class RecieverResource {
         if (recieverDTO.getId() != null) {
             throw new BadRequestAlertException("A new reciever cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReceiverDTO result = recieverService.save(recieverDTO);
+        
+        log.info("Names: " + recieverDTO.getGroups());
+        
+        ReceiverDTO result = receiverService.save(recieverDTO);
         return ResponseEntity.created(new URI("/api/recievers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
-     * PUT  /recievers : Updates an existing reciever.
+     * PUT /recievers : Updates an existing reciever.
      *
-     * @param recieverDTO the recieverDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated recieverDTO,
-     * or with status 400 (Bad Request) if the recieverDTO is not valid,
-     * or with status 500 (Internal Server Error) if the recieverDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param recieverDTO
+     *            the recieverDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     *         recieverDTO, or with status 400 (Bad Request) if the recieverDTO is
+     *         not valid, or with status 500 (Internal Server Error) if the
+     *         recieverDTO couldn't be updated
+     * @throws URISyntaxException
+     *             if the Location URI syntax is incorrect
      */
     @PutMapping("/recievers")
     @Timed
     public ResponseEntity<ReceiverDTO> updateReciever(@RequestBody ReceiverDTO recieverDTO) throws URISyntaxException {
         log.debug("REST request to update Reciever : {}", recieverDTO);
+
+        log.info("Names: " + recieverDTO.getGroups());
+
         if (recieverDTO.getId() == null) {
             return createReciever(recieverDTO);
         }
-        ReceiverDTO result = recieverService.save(recieverDTO);
+        ReceiverDTO result = receiverService.save(recieverDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, recieverDTO.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, recieverDTO.getId().toString()))
+                .body(result);
     }
 
     /**
-     * GET  /recievers : get all the recievers.
+     * GET /recievers : get all the recievers.
      *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of recievers in body
+     * @param pageable
+     *            the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of recievers in
+     *         body
      */
     @GetMapping("/recievers")
     @Timed
     public ResponseEntity<List<ReceiverDTO>> getAllRecievers(Pageable pageable) {
         log.debug("REST request to get a page of Recievers");
-        Page<ReceiverDTO> page = recieverService.findAll(pageable);
+        Page<ReceiverDTO> page = receiverService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/recievers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /recievers/:id : get the "id" reciever.
+     * GET /recievers/:id : get the "id" reciever.
      *
-     * @param id the id of the recieverDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the recieverDTO, or with status 404 (Not Found)
+     * @param id
+     *            the id of the recieverDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the
+     *         recieverDTO, or with status 404 (Not Found)
      */
     @GetMapping("/recievers/{id}")
     @Timed
     public ResponseEntity<ReceiverDTO> getReciever(@PathVariable Long id) {
         log.debug("REST request to get Reciever : {}", id);
-        ReceiverDTO recieverDTO = recieverService.findOne(id);
+        ReceiverDTO recieverDTO = receiverService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(recieverDTO));
     }
 
     /**
-     * DELETE  /recievers/:id : delete the "id" reciever.
+     * DELETE /recievers/:id : delete the "id" reciever.
      *
-     * @param id the id of the recieverDTO to delete
+     * @param id
+     *            the id of the recieverDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/recievers/{id}")
     @Timed
     public ResponseEntity<Void> deleteReciever(@PathVariable Long id) {
         log.debug("REST request to delete Reciever : {}", id);
-        recieverService.delete(id);
+        receiverService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

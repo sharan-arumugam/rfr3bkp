@@ -1,11 +1,9 @@
 package com.lti.rfr.service.mapper;
 
-import com.lti.rfr.domain.*;
-import com.lti.rfr.service.dto.FunctionalGroupDTO;
-import com.lti.rfr.service.dto.ReceiverDTO;
-
-import org.mapstruct.*;
 import org.springframework.stereotype.Service;
+
+import com.lti.rfr.domain.Receiver;
+import com.lti.rfr.service.dto.ReceiverDTO;
 
 /**
  * Mapper for the entity Reciever and its DTO RecieverDTO.
